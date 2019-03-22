@@ -1,25 +1,42 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import logo from './kanye.png';
 import './App.css';
 
+
 class App extends Component {
+
+  constructor() {
+    super();
+    this.state = {
+      quote: '',
+    };
+  }
+
+  componentDidMount () {
+    fetch('https://api.kanye.rest/')
+    .then( response => response.json() )
+    .then( data => 
+      this.setState({
+        quote: data,
+      })
+    )
+    .catch( error => { console.error(error); })
+  }
+
   render() {
     return (
       <div className="App">
         <header className="App-header">
+          <h1>Kanye Rest West React</h1>
           <img src={logo} className="App-logo" alt="logo" />
           <p>
-            Edit <code>src/App.js</code> and save to reload.
+            {this.state.quote.quote}
           </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
+
         </header>
+        <footer className="App-footer">
+          <p>Inspired by <a href="https://kanye.rest/">kanye.rest</a></p>
+        </footer>
       </div>
     );
   }
